@@ -1,0 +1,36 @@
+﻿@model ShoppingCart
+
+<form method="post" asp-action="AddToCart">
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <input asp-for="ProductId" hidden/>
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="~/@Model.Product.ImgUrl" alt="..." width="300" height="300" /></div>
+                <div class="col-md-6">
+                    <h1 class="display-5 fw-bolder">@Model.Product.Name</h1>
+                    <div class="fs-5 mb-2">
+                        <span><b class="text-secondary">Category:</b></span>
+                        <span><b>@Model.Product.Category.Name</b></span>
+                    </div>
+                    <div class="fs-5 mb-2">
+                        <span><b class="text-secondary">Price:</b></span>
+                    <span><b>@Model.Product.Price.ToString("C")</b></span>
+                    </div>
+                
+                    <p><b class="text-secondary">Description:</b></p>
+                <p class="lead"><b>@Model.Product?.Description</b></p>
+                    <div class="d-flex">
+                        <input asp-for="Count" class="form-control text-center me-3" id="inputQuantity" style="max-width: 3rem" />
+                        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/scripts.js"></script>

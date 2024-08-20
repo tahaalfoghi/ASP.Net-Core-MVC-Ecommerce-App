@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewBag.PageTitle = "Users Manegement";
+    ViewBag.CardTitle = "Users List";
+
+}
+<partial name="_Notification" />
+
+<div class="mb-5">
+    <a href="/Identity/Account/Register" class="btn btn-primary">
+        Create new User
+        <i class="bi bi-plus-circle-fill"></i>
+    </a>
+</div>
+<table id="tbldata" class="table table-hover" width="100%">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <td scope="col">LockUnlock</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><img src="~/img/user.png" width="50"/></td>
+                <td>@item.UserName.Replace("@gmail.com"," ")</td>
+                <td>@item.Email</td>
+                @if(item.LockoutEnd is null || item.LockoutEnd < DateTime.Now)
+                {
+                    <td>
+                        <a asp-action="LockUnlock" asp-route-id="@item.Id" class="btn btn-success"> 
+                            <i class="bi bi-lock-fill"></i>
+                        </a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a href="/Admin/Users/LockUnlock/@item.Id" class="btn btn-danger">
+
+                            <i class="bi bi-unlock-fill"></i>
+                        </a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+
+}

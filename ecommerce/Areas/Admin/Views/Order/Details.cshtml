@@ -1,0 +1,184 @@
+﻿@model OrderVM
+@using ecommerce.web.Helpers
+@{
+    ViewBag.PageTitle = "Order Details";
+}
+
+<partial name="_Notification" />
+
+<form method="post">
+    <input hidden asp-for="Order.Id" />
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>PickUp Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label">Name</label>
+                                <input asp-for="Order.UserName" readonly class="form-control" id="name" placeholder="Enter name">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone</label>
+                                <input asp-for="Order.PhoneNumber" class="form-control" id="phone" placeholder="Enter phone">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="address" class="form-label">Address</label>
+                                <input asp-for="Order.Address" class="form-control" id="address" placeholder="Enter address">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="city" class="form-label">City</label>
+                                <input asp-for="Order.City" class="form-control" id="city" placeholder="Enter city">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input asp-for="Order.User.Email" value="@Model.Order.User.Email" class="form-control" id="email" placeholder="Enter email">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="orderDate" class="form-label">Order Date</label>
+                                <input asp-for="Order.OrderDate" value="@Model.Order.OrderDate" class="form-control" id="orderDate">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="carrier" class="form-label">Carrier</label>
+                                <input asp-for="Order.Carrier" class="form-control" id="carrier" placeholder="Enter carrier">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="trackingNumber" class="form-label">Tracking Number</label>
+                                <input asp-for="Order.TrackingNumber" class="form-control" id="trackingNumber" placeholder="Enter tracking number">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="shippingDate" class="form-label">Shipping Date</label>
+                                <input asp-for="Order.ShipDate" class="form-control" id="shippingDate">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="sessionID" class="form-label">Session ID</label>
+                                <input asp-for="Order.SessionId" class="form-control" id="sessionID" value="@Model.Order.SessionId" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="paymentIntentID" class="form-label">Payment Intent ID</label>
+                                <input readonly asp-for="Order.PaymentIntentId" class="form-control" id="paymentIntentID" value="@Model.Order.PaymentIntentId">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="paymentDate" class="form-label">Payment Date</label>
+                                <input asp-for="Order.PaymentDate" value="@Model.Order.PaymentDate" class="form-control" id="paymentDate">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="paymentStatus" class="form-label">Payment Status</label>
+                                <input asp-for="Order.PaymentStatus" class="form-control" id="paymentStatus" placeholder="Enter payment status">
+                            </div>
+                        </div>
+                        <button type="submit" asp-action="UpdateOrderDetails" class="btn btn-primary">Update Pickup Details</button>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>Order Summary</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="text-center mb-4">
+                            <label class="btn btn-outline-primary form-control" id="ostatus">Order-Status-@Model.Order.Status</label>
+                        </h5>
+                        <ul>
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <li class="list-group-item d-flex justify-content-between p-2">
+                                    <div class="row container">
+                                        <div class="col-8">
+                                            <h6 class="my-0 text-primary">@item.Product.Name</h6>
+                                            <small class="text-muted">Price:@item.Product.Price.ToString("C")</small><br />
+                                            <small class="text-muted">Count:@item.Count</small>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <p class="text-success">@((item.Product.Price * item.Count).ToString("C"))</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+
+
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5><strong>Total:</strong>@Model.Order.TotalAmount.ToString("C")</h5>
+                    </div>
+                    <div class="container-sm">
+                        <input hidden asp-for="@Model.Order.Id" />
+                        @if (Model.Order.Status == SD.Approved)
+                        {
+                            <input type="submit" asp-action="ProccessOrder" class="btn btn-primary" value="Start Proccess" />
+
+                        }
+                        @if (Model.Order.Status == SD.Proccess)
+                        {
+                            <input type="submit" asp-action="ShipOrder" onclick="ValidateData()" class="btn btn-success" id="ship" value="Start Shipping" />
+
+                        }
+                        @if (Model.Order.Status != SD.Canceled || Model.Order.Status != SD.Refunded || Model.Order.Status != SD.Shipped)
+                        {
+                            <input type="submit" asp-action="CancelOrder" class="btn btn-danger" id="cancel" value="Cancel Order" />
+
+                        }
+                        @if (Model.Order.Status == SD.Shipped)
+                        {
+                            <input type="submit" asp-action="DeliverOrder" class="btn btn-primary" value="Deliver Order" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/plugins/toastr/toastr.min.js"></script>
+
+    <script>
+
+        function ValidateData() {
+            if (document.getElementById("carrier") == ' ') {
+                Swal.fire({
+                    title: "Error Happned While Shipped The Order",
+                    text: "You must enter a carrier for the order",
+                    icon: "warning",
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ok"
+                });
+                return false;
+            }
+            if (document.getElementById("trackingNumber") == '') {
+                Swal.fire({
+                    title: "Error Happned While Shipped The Order",
+                    text: "You must enter a trackingNumber for the order",
+                    icon: "warning",
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ok"
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

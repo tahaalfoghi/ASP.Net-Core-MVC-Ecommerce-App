@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.PageTitle = "Order Manegement";
+    ViewBag.CardTitle = "Order List";
+}
+
+<partial name="_Notification" />
+
+<div class="mb-5">
+</div>
+<table id="otbl" class="table table-hober" width="100%">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Email</th>
+            <th scope="col">PhoneNumber</th>
+            <th scope="col">City</th>
+            <th scope="col">TotalAmount</th>
+            <th scope="col">OrderDate</th>
+            <th scope="col">ShipDate</th>
+            <th scope="col">Order Status</th>
+            <th scope="col">Payment Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts {
+    <script>
+        var tbl;
+
+        $(document).ready(function () {
+            LoadData();
+        });
+
+        function LoadData() {
+            tbl = $("#otbl").DataTable({
+                "ajax": {
+                    "url": "/Admin/Order/GetOrders",
+                    "type": "GET",
+                    "datatype": "JSON",
+                },
+                "columns": [
+
+                    { "data": "id" },
+                    { "data": "userName" },
+                    { "data": "user.email" },
+                    { "data": "phoneNumber" },
+                    { "data": "city" },
+                    { "data": "totalAmount" },
+                    { "data": "orderDate" },
+                    { "data": "shipDate" },
+                    { "data": "status" },
+                    { "data": "paymentStatus" },
+                    {
+                        "data": "id",
+                        "render": function (id) {
+                            
+                            return `
+                                    <a href="/Admin/Order/Details?orderId=${id}" class="btn btn-primary">
+                                      Details
+                                      <i class="bi bi-info-square-fill"></i>
+                                    </a>
+                            `
+                        }
+                    }
+                ]
+            });
+        }
+    </script>
+}

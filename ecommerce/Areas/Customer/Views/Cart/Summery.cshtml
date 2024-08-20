@@ -1,0 +1,167 @@
+﻿@model ShoppingCartVM
+@using Microsoft.Extensions.Options
+@inject IOptions<ecommerce.web.Helpers.StripeConfig> Stripe
+<div class="container">
+
+    <div class="row">
+        <div class="col-xl-8">
+
+            <div class="card">
+                <div class="card-body">
+                    <ul class="activity-checkout mb-0 px-4 mt-3">
+                        <li class="checkout-item">
+                            <div class="avatar checkout-icon p-1">
+                                <div class="avatar-title rounded-circle bg-primary">
+                                    <i class="bx bxs-receipt text-white font-size-20"></i>
+                                </div>
+                            </div>
+                            <div class="feed-item-list">
+                                <div>
+                                    <h5 class="font-size-16 mb-1">Bill Info</h5>
+                                    <div class="mb-3">
+                                        <form method="post" asp-action="PlaceOrder">
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="billing-name">Name</label>
+                                                            <input asp-for="Order.UserName" class="form-control" id="billing-name" value="@Model.Order.UserName">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="billing-phone">Phone</label>
+                                                            <input asp-for="Order.PhoneNumber" class="form-control" id="billing-phone" value="@Model.Order.PhoneNumber">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-4 mb-lg-0">
+                                                            <label class="form-label" for="billing-city">City</label>
+                                                            <input asp-for="Order.User.City" class="form-control" id="billing-city" value="@Model.Order.City">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-4 mb-lg-0">
+                                                            <label class="form-label">Address</label>
+                                                            <input asp-for="Order.Address" class="form-control" id="billing-city" value="@Model.Order.Address">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="text-end mt-2 mt-sm-0">
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="bi bi-cart-fill"></i> Procced
+                                                    </button>
+            
+                                                </div>
+                                            </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row my-4">
+                <div class="col">
+                    <a asp-action="Index" class="btn btn-link text-muted">
+                        <i class="bi bi-arrow-left me-1"></i> Continue Shopping
+                    </a>
+                </div> <!-- end col -->
+               
+            </div> 
+        </div>
+        <div class="col-xl-4">
+            <div class="card checkout-order-summary">
+                <div class="card-body">
+                    <div class="p-3 bg-light mb-3">
+                        <h5 class="font-size-16 mb-0">Order Summary <span class="float-end ms-2">#MN0124</span></h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-centered mb-0 table-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="border-top-0" style="width: 110px;" scope="col"><b>Product</b></th>
+                                    <th class="border-top-0" scope="col"><b>Product Desc</b></th>
+                                    <th class="border-top-0" scope="col"><b>Price</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var item in Model.CartItemsList)
+                                {
+                                    <tr>
+                                        <th scope="row"><img src="~/@item.Product.ImgUrl" width="100" alt="product-img" title="product-img" class="avatar-lg rounded"></th>
+                                        <td>
+                                            <h5 class="font-size-16 text-truncate">@item.Product.Name</h5>
+                                            <p class="text-muted mb-0">
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star text-warning"></i>
+                                                <i class="bx bxs-star-half text-warning"></i>
+                                            </p>
+                                            <p class="text-muted mb-0 mt-1"><b>@item.Product.Price X @item.Count</b></p>
+                                        </td>
+                                        <td><b>@(@item.Product.Price * item.Count)</b></td>
+                                    </tr>
+                                }
+                               
+                                <tr>
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Sub Total :</h5>
+                                    </td>
+                                    <td>
+                                        <b>@Model.Total.ToString("C")</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Discount :</h5>
+                                    </td>
+                                    <td>
+                                        $0
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Shipping Charge :</h5>
+                                    </td>
+                                    <td>
+                                        $0
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Estimated Tax :</h5>
+                                    </td>
+                                    <td>
+                                        $0
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-light">
+                                    <td colspan="2">
+                                        <h5 class="font-size-14 m-0">Total:</h5>
+                                    </td>
+                                    <td>
+                                       <b>@Model.Order.TotalAmount</b>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+</div>

@@ -1,0 +1,30 @@
+﻿@model Category
+
+@{
+    ViewBag.PageTitle = "Category Manegement";
+    ViewBag.CardTitle = "Edit Category";
+   
+}
+<div class="container">
+    <form asp-action="Update" method="post" class="form" enctype="multipart/form-data">
+        <input hidden asp-for="Id"/>
+        <div class="mb-3">
+            <label asp-for="Name" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input asp-for="Name" type="text" class="form-control" required id="Name" placeholder="Category Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+                <input asp-for="Description" type="text" class="form-control" required id="Description" placeholder="Description">
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success">Save</button>
+            <a class="btn btn-warning" asp-controller="Category" asp-action="Index">Back To Categories</a>
+        </div>
+    </form>
+</div>

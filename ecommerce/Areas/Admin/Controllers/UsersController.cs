@@ -16,10 +16,11 @@ namespace ecommerce.web.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly AppDbContext context;
-
-        public UsersController(AppDbContext context)
+        private readonly IUnitOfWork uow;
+        public UsersController(AppDbContext context, IUnitOfWork uow)
         {
             this.context = context;
+            this.uow = uow;
         }
 
         public IActionResult Index()
@@ -50,5 +51,6 @@ namespace ecommerce.web.Areas.Admin.Controllers
             context.SaveChanges();
             return RedirectToAction("Index","Users", new {area="Admin"});
         }
+        
     }
 }

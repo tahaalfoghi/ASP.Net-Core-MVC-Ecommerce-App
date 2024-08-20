@@ -321,6 +321,7 @@
     <None Include="wwwroot\img\credit\paypal.png" />
     <None Include="wwwroot\img\credit\paypal2.png" />
     <None Include="wwwroot\img\credit\visa.png" />
+    <None Include="wwwroot\img\R.png" />
     <None Include="wwwroot\js\adminlte.js" />
     <None Include="wwwroot\js\adminlte.js.map" />
     <None Include="wwwroot\js\adminlte.min.js" />

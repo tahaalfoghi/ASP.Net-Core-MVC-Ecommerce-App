@@ -58,6 +58,9 @@ namespace ecommerce.web.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string City { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
@@ -69,7 +72,8 @@ namespace ecommerce.web.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+               
             };
         }
 

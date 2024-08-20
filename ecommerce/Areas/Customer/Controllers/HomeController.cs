@@ -65,6 +65,14 @@ namespace ecommerce.web.Areas.Customer.Controllers
 
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> UserOrders()
+        {
+            var claimsIdentity =  (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = claim.Value;
+            var order = await uow.OrderRepository.GetAllByFilterAsync(x => x.UserId == userId, includes: "User");
 
+            return View(order);
+        }
     }
 }

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Order>
+
+    <div class="row">
+        <div class="container">
+        <table class="table table-hover table-striped width="100%">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Paymnet Date</th>
+                    <th scope="col">Carrier</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-dark">@item.Id</td>
+                        <td>@item.User.FirstName</td>
+                        <td>@item.User.Email</td>
+                        <td>@item.City</td>
+                        <td>@item.OrderDate</td>
+                        <td>@item.PaymentDate</td>
+                        <td>@item.Carrier</td>
+                        <td>@item.Status</td>
+                        <td>@item.TotalAmount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+    </div>

@@ -18,7 +18,7 @@
             <div class="mb-3">
                 <label asp-for="Product.Description" class="control-label">Description</label>
                 <div class="col-sm-10">
-                    <input asp-for="Product.Description" type="text" class="form-control" required  placeholder="Description">
+                    <textarea id="txt" asp-for="Product.Description" type="text" class="form-control" required  placeholder="Description"></textarea>
                     <span asp-validation-for="Product.Description" class="text-danger"></span>
                 </div>
             </div>
@@ -32,7 +32,7 @@
             <div class="mb-3">
                 <label asp-for="Product.ImgUrl" class="control-label">Image</label>
                 <div class="col-sm-10">
-                    <input asp-for="Product.ImgUrl" type="file" class="form-control" name="file" required  placeholder="Description">
+                    <input asp-for="Product.ImgUrl" type="file" class="form-control" name="file" required onchange="fill(event);" placeholder="Description">
                     <span asp-validation-for="Product.ImgUrl" class="text-danger"></span>
                 </div>
             </div>
@@ -50,10 +50,24 @@
                 <a class="btn btn-warning" asp-controller="Category" asp-action="Index">Back To Categories</a>
             </div>
         </form>
-
+    </div>
+    <div class="col-md-4">
+        <div class="container">
+            <img id="preview" width="300" height="300" />
+        </div>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        tinymce.init({
+            selector: '#txt'
+        });
+
+        var fill = function(event){
+            var imagBase = document.getElementById("preview");
+            imgHolder.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 }

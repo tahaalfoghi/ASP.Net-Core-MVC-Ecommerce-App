@@ -3,6 +3,7 @@ using ecommerce.Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using X.PagedList.Extensions;
 
 namespace ecommerce.web.Areas.Customer.Controllers
 {
@@ -16,9 +17,13 @@ namespace ecommerce.web.Areas.Customer.Controllers
             this.uow = uow;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await uow.ProductRepository.GetAllAsync(includes:"Category"));
+            var pageNumber = page ?? 1;
+            var pageSize = 8;
+
+            var list = (await uow.ProductRepository.GetAllAsync(includes: "Category")).ToPagedList(pageNumber, pageSize);
+            return View(list);
         }
 
         public async Task<IActionResult> AddToCart(int id)

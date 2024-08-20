@@ -6,7 +6,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ecommerce.web.Helpers;
-using ecommerce.Entities.Models;
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);

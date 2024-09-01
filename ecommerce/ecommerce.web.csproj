@@ -434,6 +434,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\css\alt\" />
     <Folder Include="wwwroot\Images\Products\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
@@ -447,28 +448,6 @@
   <ItemGroup>
     <None Include="wwwroot\css\adminlte.css" />
     <None Include="wwwroot\css\adminlte.css.map" />
-    <None Include="wwwroot\css\adminlte.min.css" />
-    <None Include="wwwroot\css\adminlte.min.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.components.css" />
-    <None Include="wwwroot\css\alt\adminlte.components.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.components.min.css" />
-    <None Include="wwwroot\css\alt\adminlte.components.min.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.core.css" />
-    <None Include="wwwroot\css\alt\adminlte.core.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.core.min.css" />
-    <None Include="wwwroot\css\alt\adminlte.core.min.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.light.css" />
-    <None Include="wwwroot\css\alt\adminlte.light.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.light.min.css" />
-    <None Include="wwwroot\css\alt\adminlte.light.min.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.pages.css" />
-    <None Include="wwwroot\css\alt\adminlte.pages.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.pages.min.css" />
-    <None Include="wwwroot\css\alt\adminlte.pages.min.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.plugins.css" />
-    <None Include="wwwroot\css\alt\adminlte.plugins.css.map" />
-    <None Include="wwwroot\css\alt\adminlte.plugins.min.css" />
-    <None Include="wwwroot\css\alt\adminlte.plugins.min.css.map" />
     <None Include="wwwroot\img\credit\american-express.png" />
     <None Include="wwwroot\img\credit\cirrus.png" />
     <None Include="wwwroot\img\credit\mastercard.png" />
